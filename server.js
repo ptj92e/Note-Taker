@@ -18,20 +18,14 @@ app.get("/notes", function (req, res) {
 
 app.get("/api/notes", function(req, res) {
     //This file reads the db.json file and sees what is written
-    fs.readFile("./db/db.json", (err, info) => {
+    fs.readFile("./db/db.json", (err, data) => {
         if (err) throw err;
         //This redelcares the information pulled from the json file and parses it to be used by the server
-        let notes = JSON.parse(info);
+        let notes = JSON.parse(data);
         //This returns the new notes variable to the javascript to create note list items on the HTML page
         return res.json(notes);
     });
 });
-
-// app.get("/api/notes", function(req, res) {
-
-
-
-// });
 
 app.post("/api/notes", function(req, res) {
     //This is establishing what is in the note fields on the HTML page as a new note object
@@ -43,6 +37,10 @@ app.post("/api/notes", function(req, res) {
         let noteArray = JSON.parse(notes);
         //This is pushing the new note object into the array of objects in the json page
         noteArray.push(newNote);
+        //This for loop loops over the note Array and assigns an id based off of the index of the note in the array.
+        for (let i = 0; i < noteArray.length; i++) {
+            noteArray[i].id = 1 + i;
+        };
         //This is re writing the json file with the new array created
         fs.writeFile("./db/db.json", JSON.stringify(noteArray), (err) => {
             if (err) throw err;
