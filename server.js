@@ -16,7 +16,7 @@ app.get("/notes", function (req, res) {
     res.sendFile(path.join(__dirname, "./notes.html"));
 });
 
-app.get("/api/notes", function(req, res) {
+app.get("/api/notes", function (req, res) {
     //This file reads the db.json file and sees what is written
     fs.readFile("./db/db.json", (err, data) => {
         if (err) throw err;
@@ -27,11 +27,11 @@ app.get("/api/notes", function(req, res) {
     });
 });
 
-app.post("/api/notes", function(req, res) {
+app.post("/api/notes", function (req, res) {
     //This is establishing what is in the note fields on the HTML page as a new note object
     let newNote = req.body;
     //This is reading the json file used as the storage to be pulled from
-    fs.readFile("./db/db.json", function(err, notes) {
+    fs.readFile("./db/db.json", function (err, notes) {
         if (err) throw err;
         //This is parsing the note array in the json object so that more information can be added to it
         let noteArray = JSON.parse(notes);
@@ -51,8 +51,44 @@ app.post("/api/notes", function(req, res) {
     res.json(newNote);
 });
 
+app.delete("/api/notes/:id", function (req, res) {
+    //This line reads the json file and returns the data
+    fs.readFile("./db/db.json", function (err, notes) {
+        if (err) throw err;
+        //This line parses the data and sets it as a variable noteArray
+        let noteArray = JSON.parse(notes);
+        if (noteArray.length === 0) {
+            noteArray = null;
+        } else {
+            //This loops over the array and checks the id of each array item compared to the id of what was clicked
+            for (let i = 0; i < noteArray.length; i++) {
+                //If the id matches the array item, it is spliced from the array
+                if (req.params.id == noteArray[i].id) {
+                    noteArray.splice(i, 1);
+                }
+            };
+        };
+        //This if statement checks to see if the array is empty. If it is, the funtion returns and nothing happens. 
+        if (noteArray.length === 0) {
+            fs.writeFile("./db/db.json", JSON.stringify(noteArray), (err) => {
+                if (err) throw err;
+            });
+        } else {
+            //This for loop rewrites the id of each array object
+            for (let i = 0; i < noteArray.length; i++) {
+                noteArray[i].id = 1 + i;
+            };
+        }
+        //This is re writing the json file with the new array created
+        fs.writeFile("./db/db.json", JSON.stringify(noteArray), (err) => {
+            if (err) throw err;
+        });
+        return res.json(noteArray);
+    });
+});
+
 app.use("/assets", express.static("assets"));
 
-app.listen(PORT, function() {
+app.listen(PORT, function () {
     console.log("App listening on PORT " + PORT);
 });
