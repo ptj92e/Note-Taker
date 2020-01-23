@@ -85,7 +85,7 @@ app.delete("/api/notes/:id", function (req, res) {
         fs.writeFile("./db/db.json", JSON.stringify(noteArray), (err) => {
             if (err) throw err;
         });
-        return res.json(noteArray);
+        return res.status(200).send();
     });
 });
 
