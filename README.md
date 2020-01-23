@@ -14,4 +14,4 @@ The post method is linked to the save button on the HTML page. Once a note is ty
 The delete method takes in the extra parameter of the id of what is clicked. That id is then sent into a for loop that loops over the array of notes saved to the json page and is checked against the id of each note. If the id matched the current note, the note is spliced from the array. Once the note is deleted, the array is the looped over again, reseting the id values of each note and written back to the .json file.
 
 ## Heroku
-After the app is finished, we were also asked to deploy the app to Heroku. Here is the link:
+After the app is finished, we were also asked to deploy the app to Heroku. Here is the link: https://warm-refuge-36790.herokuapp.com/notes
