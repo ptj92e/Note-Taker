@@ -3,6 +3,8 @@ This assignment was an exercise in setting up a server and handling get, post, a
 
 ![Note Taker](/images/NoteTaker.png)
 
+If you would like to see the deployed version of this app, please follow this link: https://warm-refuge-36790.herokuapp.com/
+
 ## Express
 Express was the main module we used for the functionality of the server. Using the different express methods get, post, and delete, I passed in the routes into those requests and added a handler that utilized the fs module to read and write files based on the request. 
 
