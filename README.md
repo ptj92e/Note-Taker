@@ -1,6 +1,8 @@
 # Note-Taker
 This assignment was an exercise in setting up a server and handling get, post, and delete requests to the server. When the user makes a request, the server either gets, posts, or deletes from the db.json page. On the front end, the code and styling was already supplied. All we had to do was create a server to handle the requests. 
 
+![Note Taker](/images/NoteTaker.png)
+
 ## Express
 Express was the main module we used for the functionality of the server. Using the different express methods get, post, and delete, I passed in the routes into those requests and added a handler that utilized the fs module to read and write files based on the request. 
 
